@@ -1475,6 +1475,7 @@
             
             // 专辑名称
             ctx.font = 'italic 54px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
+            ctx.fillStyle = textColor;
             ctx.fillText(albumTitle.value || '专辑名称', size/2, 117);
             
             // 歌手名
