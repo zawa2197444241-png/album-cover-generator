@@ -844,6 +844,7 @@
         
         // 专辑名称
         ctx.font = 'italic 18px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
+        ctx.fillStyle = textColor;
         ctx.fillText(albumTitle.value || '专辑名称', previewSize/2, 39);
         
         // 歌手名
@@ -1480,7 +1481,7 @@
             
             // 歌手名
             ctx.font = 'italic 54px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
-            ctx.fillStyle = secondaryTextColor;
+            ctx.fillStyle = textColor;
             ctx.fillText(artistName.value || '歌手名', size/2, 174);
             
             // 重置阴影效果
