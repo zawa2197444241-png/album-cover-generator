@@ -1490,7 +1490,7 @@
             ctx.shadowOffsetY = 0;
             
             // 生成图片数据
-            const dataUrl = canvas.toDataURL('image/png');
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
             
             // 更新预览区域显示生成的图片
             const coverImage = document.getElementById('coverImage');
@@ -1499,10 +1499,10 @@
             coverImage.style.backgroundPosition = 'center';
             coverImage.style.backgroundRepeat = 'no-repeat';
             
-            // 下载图片为PNG
+            // 下载图片为JPG
             try {
                 // 确保文件名有效
-                const fileName = `${albumTitle.value || 'album'}_${artistName.value || 'artist'}.png`;
+                const fileName = `${albumTitle.value || 'album'}_${artistName.value || 'artist'}.jpg`;
                 
                 // 创建下载链接
                 const link = document.createElement('a');
