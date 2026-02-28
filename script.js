@@ -1467,7 +1467,6 @@
         function drawText() {
             // 根据颜色模式设置文字颜色
             const textColor = currentColorMode === 'black' ? '#ffffff' : '#000000';
-            const secondaryTextColor = currentColorMode === 'black' ? '#b3b3b3' : '#666666';
             
             // 绘制文字
             ctx.fillStyle = textColor;
@@ -1476,12 +1475,10 @@
             
             // 专辑名称
             ctx.font = 'italic 54px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
-            ctx.fillStyle = textColor;
             ctx.fillText(albumTitle.value || '专辑名称', size/2, 117);
             
             // 歌手名
             ctx.font = 'italic 54px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
-            ctx.fillStyle = textColor;
             ctx.fillText(artistName.value || '歌手名', size/2, 174);
             
             // 重置阴影效果
