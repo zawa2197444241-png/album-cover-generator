@@ -1,0 +1,480 @@
+/* 导入自定义字体 */
+@font-face {
+    font-family: 'LogoSCUnboundedSans';
+    src: url('LogoSCUnboundedSans-Regular-2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 主体样式 */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #121212; /* 深色背景 */
+    color: #ffffff;
+}
+
+/* 主容器 */
+.container {
+    max-width: 3000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 标题样式 */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* 主要内容区域 */
+.main-content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* 左侧操作区域 */
+.left-section {
+    flex: 0 0 300px; /* 固定宽度 */
+}
+
+/* 右侧预览区域 */
+.right-section {
+    flex: 1; /* 自适应宽度 */
+    min-width: 500px;
+}
+
+/* 输入区域 */
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 拖放区域 */
+.drop-area {
+    min-width: 300px;
+    height: 300px;
+    border: 2px dashed #333333;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #1e1e1e;
+}
+
+/* 拖放区域悬停效果 */
+.drop-area:hover {
+    border-color: #1db954; /* Spotify绿色 */
+    background-color: #2a2a2a;
+}
+
+/* 拖放区域激活状态 */
+.drop-area.active {
+    border-color: #1db954;
+    background-color: #2a2a2a;
+}
+
+/* 拖放区域文字 */
+.drop-area p {
+    color: #b3b3b3;
+    font-size: 16px;
+}
+
+/* 表单区域 */
+.form-section {
+    flex: 1;
+    min-width: 300px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+}
+
+.form-section h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.mode-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #2a2a2a;
+    border: 1px solid #333333;
+}
+
+.mode-buttons button.active {
+    background-color: #1db954;
+    border-color: #1db954;
+}
+
+.color-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.color-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #2a2a2a;
+    border: 1px solid #333333;
+}
+
+.color-buttons button.active {
+    background-color: #1db954;
+    border-color: #1db954;
+}
+
+.transform-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.transform-buttons button {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #2a2a2a;
+    border: 1px solid #333333;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 200px;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crop-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: none;
+}
+
+.crop-container.active {
+    display: block;
+}
+
+.crop-container img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+/* 自由变换容器 */
+.transform-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: none;
+}
+
+.transform-container.active {
+    display: block;
+}
+
+#transformCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 自由变换手柄 */
+.transform-handles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.handle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #1db954;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    pointer-events: auto;
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(29, 185, 84, 0.3);
+}
+
+.handle.top-left {
+    top: -8px;
+    left: -8px;
+    cursor: nw-resize;
+}
+
+.handle.top {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
+}
+
+.handle.top-right {
+    top: -8px;
+    right: -8px;
+    cursor: ne-resize;
+}
+
+.handle.right {
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    cursor: e-resize;
+}
+
+.handle.bottom-right {
+    bottom: -8px;
+    right: -8px;
+    cursor: se-resize;
+}
+
+.handle.bottom {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
+}
+
+.handle.bottom-left {
+    bottom: -8px;
+    left: -8px;
+    cursor: sw-resize;
+}
+
+.handle.left {
+    top: 50%;
+    left: -8px;
+    transform: translateY(-50%);
+    cursor: w-resize;
+}
+
+.handle.rotate {
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background-color: #ff0000;
+    cursor: grab;
+    box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.3);
+}
+
+.handle.rotate:active {
+    cursor: grabbing;
+}
+
+/* 表单组 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* 表单标签 */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+/* 表单输入框 */
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+/* 输入框聚焦效果 */
+.form-group input:focus {
+    outline: none;
+    border-color: #1db954; /* Spotify绿色 */
+}
+
+/* 按钮样式 */
+button {
+    background-color: #1db954;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+/* 按钮悬停效果 */
+button:hover {
+    background-color: #1ed760;
+}
+
+/* 预览区域 */
+.preview-section {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    overflow: auto; /* 启用滚动 */
+}
+
+/* 预览标题 */
+.preview-section h2 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* 封面预览容器 */
+.cover-preview {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    min-width: 1000px; /* 最小宽度 */
+}
+
+/* 封面内容 */
+.cover-content {
+    position: relative;
+    width: 1000px; /* 预览尺寸 */
+    height: 1000px;
+    background-color: #2a2a2a;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
+.thumbnail-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.thumbnail-container h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.thumbnail {
+    width: 200px;
+    height: 200px;
+    background-color: #1e1e1e;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 封面图片 */
+.cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('template.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(2.45px 1.72px 8px rgba(255, 0, 0, 0.3));
+}
+
+/* 文字覆盖层 - 隐藏，因为预览会显示完整图片 */
+.cover-overlay {
+    display: none;
+}
+
+/* 中心内容 - 隐藏 */
+.center-content {
+    display: none;
+}
+
+/* 专辑标题 - 隐藏 */
+.album-title {
+    display: none;
+}
+
+/* 歌手名 - 隐藏 */
+.artist-name {
+    display: none;
+}
+
+/* 封面图片（重复定义，确保样式正确） */
+.cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('template.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(2.45px 1.72px 8px rgba(255, 0, 0, 0.3));
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .input-section {
+        flex-direction: column;
+    }
+    
+    .drop-area,
+    .form-section {
+        width: 100%;
+    }
+}

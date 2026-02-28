@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专辑封面生成器</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 cropper.js 样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <!-- 引入 cropper.js 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="container">
+        <h1>专辑封面生成器</h1>
+        
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <!-- 左侧操作区域 -->
+            <div class="left-section">
+                <!-- 编辑模式切换按钮 -->
+                <div class="form-section">
+                    <h3>编辑模式</h3>
+                    <div class="mode-buttons">
+                        <button id="editModeBtn" class="active">编辑图片</button>
+                        <button id="previewModeBtn">预览效果</button>
+                    </div>
+                </div>
+                
+                <!-- 编辑工具切换 -->
+                <div class="form-section" id="editToolSection" style="display: none;">
+                    <h3>编辑工具</h3>
+                    <div class="mode-buttons">
+                        <button id="transformToolBtn" class="active">自由变换</button>
+                    </div>
+                </div>
+                
+                <!-- 图片变换控制 -->
+                <div class="form-section" id="transformControls" style="display: none;">
+                    <h3>自由变换</h3>
+                    <p>拖动框的边缘和角落来调整大小和形状，拖动框内部来移动位置</p>
+                    <div class="transform-buttons">
+                        <button id="resetBtn">重置</button>
+                    </div>
+                </div>
+                
+                <!-- 颜色切换 -->
+                <div class="form-section">
+                    <h3>颜色模式</h3>
+                    <div class="color-buttons">
+                        <button id="blackModeBtn" class="active">白</button>
+                        <button id="whiteModeBtn">黒</button>
+                    </div>
+                </div>
+                
+                <!-- 最终效果预览 -->
+                <div class="form-section">
+                    <h3>最终效果</h3>
+                    <div class="thumbnail" id="thumbnail"></div>
+                </div>
+                
+                <!-- 表单区域 -->
+                <div class="form-section">
+                    <!-- 专辑名称输入 -->
+                    <div class="form-group">
+                        <label for="albumTitle">专辑名称</label>
+                        <input type="text" id="albumTitle" placeholder="请输入专辑名称">
+                    </div>
+                    <!-- 歌手名输入 -->
+                    <div class="form-group">
+                        <label for="artistName">歌手名</label>
+                        <input type="text" id="artistName" placeholder="请输入歌手名">
+                    </div>
+                    <!-- 下载按钮 -->
+                    <button id="downloadBtn">下载封面</button>
+                </div>
+            </div>
+            
+            <!-- 右侧预览区域 -->
+            <div class="right-section">
+                <div class="preview-section">
+                    <h2>预览</h2>
+                    <!-- 封面预览 -->
+                    <div class="cover-preview" id="coverPreview">
+                        <div class="cover-content">
+                            <!-- 封面图片 -->
+                            <div class="cover-image" id="coverImage"></div>
+                            <!-- 裁剪容器 -->
+                        <div class="crop-container" id="cropContainer">
+                            <img id="cropImage" src="" alt="上传图片" />
+                        </div>
+                        <!-- 自由变换容器 -->
+                        <div class="transform-container" id="transformContainer" style="display: none;">
+                            <canvas id="transformCanvas" width="1000" height="1000"></canvas>
+                            <div class="transform-handles" id="transformHandles">
+                                <div class="handle top-left"></div>
+                                <div class="handle top"></div>
+                                <div class="handle top-right"></div>
+                                <div class="handle right"></div>
+                                <div class="handle bottom-right"></div>
+                                <div class="handle bottom"></div>
+                                <div class="handle bottom-left"></div>
+                                <div class="handle left"></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
