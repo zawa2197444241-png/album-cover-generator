@@ -1474,13 +1474,13 @@
             ctx.textBaseline = 'top';
             
             // 专辑名称
-            ctx.font = '24px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
-            ctx.fillText(albumTitle.value || '专辑名称', size/2, 61.49);
+            ctx.font = '54px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
+            ctx.fillText(albumTitle.value || '专辑名称', size/2, 117);
             
             // 歌手名
-            ctx.font = '24px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
+            ctx.font = '54px LogoSCUnboundedSans, Helvetica Neue, Arial, sans-serif';
             ctx.fillStyle = secondaryTextColor;
-            ctx.fillText(artistName.value || '歌手名', size/2, 88);
+            ctx.fillText(artistName.value || '歌手名', size/2, 174);
             
             // 重置阴影效果
             ctx.shadowColor = 'transparent';
